@@ -1,0 +1,28 @@
+import firebase from 'firebase/app';
+
+export default {
+    data(){
+        return{
+            userData: null,
+        }
+    },
+    methods: {
+         getUid(){
+            const user =  firebase.auth().currentUser;
+            return  user ? user.uid : null;
+          },
+          async getName(){
+            const userId =   this.getUid();
+            let name ;
+            if(!userId) return name = null;
+            await firebase.database().ref(`/users/${userId}/info`).once('value', function(snapshot){
+                name = snapshot.val();
+            });
+            return name.name;
+          },
+           getCurrUser(){
+            const user =  firebase.auth().currentUser;
+            this.userData = user;
+          }
+    }
+}

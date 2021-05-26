@@ -1,0 +1,14 @@
+$standart:all 0.3s ease;
+$main: rgb(83, 207, 216);
+$secondary: rgb(45, 87, 116);
+$textColor: rgb(34, 34, 34);
+ul{
+    padding: 0px;
+    margin: 0px;
+    li{
+        list-style: none
+    }
+}
+
+@import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'node_modules/bootstrap-vue/src/index.scss';
