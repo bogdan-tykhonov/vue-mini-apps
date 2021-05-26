@@ -7,7 +7,7 @@
 
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="nav-links">
-          <router-link to="/">Home</router-link>
+          <router-link to="/vue-mini-apps">Home</router-link>
           <router-link to="/calculator">Calculator</router-link>
           <router-link to="/todolist">Todolist</router-link>
           <router-link to="/weather">Weather forecast</router-link>

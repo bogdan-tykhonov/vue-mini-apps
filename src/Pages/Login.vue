@@ -71,7 +71,7 @@ methods: {
             try{
               await  firebase.auth().signInWithEmailAndPassword(email, password);
                this.$emit('isAuthEvent');
-              this.$router.push('/?action=login');
+              this.$router.push('/vue-mini-apps/?action=login');
             }catch (e){
                 let errorText;
                 if(e.code == 'auth/wrong-password'){

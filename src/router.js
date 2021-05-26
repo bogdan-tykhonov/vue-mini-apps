@@ -13,7 +13,7 @@ const router = new Router({
     mode: "history",
     routes: [
         {
-            path: "/",
+            path: "/vue-mini-apps/",
             component: Home,
         },
         {
