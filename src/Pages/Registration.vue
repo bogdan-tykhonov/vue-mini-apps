@@ -110,7 +110,7 @@ data() {
                 const userId = await firebase.auth().currentUser.uid;
                  await firebase.database().ref(`/users/${userId}/info`).set({name});
                  this.$emit('isAuthEvent');
-                 this.$router.push('/');
+                 this.$router.push('/vue-mini-apps');
                  
             }catch(e){
                 console.log(e);
