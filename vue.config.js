@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/myapp/',
+  publicPath: '/vue-mini-apps/',
     css: {
       loaderOptions: {
         sass: {
