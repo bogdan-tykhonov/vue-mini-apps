@@ -21,19 +21,19 @@ export default {
        apps: [
         {
           name: "Calculator",
-          path: '/Calculator',
+          path: '/vue-mini-apps/Calculator',
           description: 'Simple calculator which can be usefull in basic math',
           previewSrc: 'calc'
         },
         {
           name: "TodoList",
-          path: '/todolist',
+          path: '/vue-mini-apps/todolist',
           description: 'Create your plan for the coming day and be productive as never',
           previewSrc: 'todo'
         },
         {
           name: "Weather",
-          path:'/weather',
+          path:'/vue-mini-apps/weather',
           description: 'Check a weather forecast from the all world',
           previewSrc: 'weather'
         }

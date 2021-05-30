@@ -43,7 +43,7 @@ export default {
        try{
         await makeLogout();
         this.$emit('isAuthEvent');
-        this.$router.push('/login?action=logout');
+        this.$router.push('/vue-mini-apps/login?action=logout');
        }catch(e){
          console.log(e);
        }

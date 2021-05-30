@@ -17,26 +17,26 @@ const router = new Router({
             component: Home,
         },
         {
-            path: '/Calculator',
+            path: '/vue-mini-apps/Calculator',
             component: Calculator,
             meta: {auth: true}
         },
         {
-            path: "/todolist",
+            path: "/vue-mini-apps/todolist",
             component: Todolist,
             meta: {auth: true}
         },
         {
-            path: "/weather",
+            path: "/vue-mini-apps/weather",
             component: Weather,
             meta: {auth:true}
         },
         {
-            path: "/login",
+            path: "/vue-mini-apps//login",
             component: Login,
         },
         {
-            path: '/registration',
+            path: '/vue-mini-apps//registration',
             component: Registration
         }
     ]
