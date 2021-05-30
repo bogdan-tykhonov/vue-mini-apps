@@ -47,7 +47,7 @@ router.beforeEach((to, from , next) => {
     const requireAuth = to.matched.some(record => record.meta.auth);
 
     if(requireAuth && !currentUser){
-        next('/login');
+        next('/vue-mini-apps/login');
     }else{
         next();
     }
