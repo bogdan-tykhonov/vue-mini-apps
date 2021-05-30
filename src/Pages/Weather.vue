@@ -2,10 +2,10 @@
     <div id="weather" class="page">
          <Heading title="Weather Forecast"  />
          <div class="container forecast-wrapper">
-             <form @submit.prevent="getCities" class="search">
+             <form @submit.prevent="getCityInfo" class="search">
                 <div class="search-group">
                     <input @focus="inputFocus = true" @blur="leaveFocus"  @input="findCities" v-model="cityInput" type="text" placeholder="Type a city...">
-                    <ul v-show="citiesHelper.length && cityName.length && inputFocus" class="cityList">
+                    <ul v-show="showCityList" class="cityList">
                         <li v-for="(city) in citiesHelper"
                         :key="city.id"
                         
@@ -58,6 +58,7 @@ import DayForecast from '@/components/DayForecast';
 import Heading from '@/components/Heading';
 import cities from '@/assets/data/city.list.json';
 import Toast from '@/mixins/toasts.js';
+import loadCityData from '@/api/weather_api';
 export default {
 name: 'Weather',
 components: {Heading, DayForecast},
@@ -86,27 +87,27 @@ data(){
     }
 },
 methods: {
-    async getCities(){
-        
+    async getCityInfo(){
+        try{
         if(!this.cityIsChoosen) return this.makeToast('danger', 'Invalid city', 'Please choose city from avaliable list');
         this.loading = true;
-       const res = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${this.cityLat}&lon=${this.cityLon}&exclude=minutely,hourly,alerts&appid=52abb27a4013c55e487c7d5dac46b944&units=metric`);
-       const data = await res.json();
+        const cityData = await loadCityData(this.cityLat, this.cityLon);
        this.cityName = this.choosenCityData.name;
        this.cityCountry = this.choosenCityData.country;
-        this.temperature = Math.round(data.current.temp);
-        this.iconCode = data.current.weather[0].icon;
-        const weather  = data.current.weather[0].description;
+        this.temperature = Math.round(cityData.current.temp);
+        this.iconCode = cityData.current.weather[0].icon;
+        const weather  = cityData.current.weather[0].description;
         this.weather = weather[0].toUpperCase() + weather.slice(1);
-        this.dailyForecast = this.changeCitiesArr(data.daily);
+        this.dailyForecast = this.normalizeCitiesArr(cityData.daily);
         this.cityIsChoosen = false;
         this.loading = false;
+        }catch(e){
+            console.log(e);
+        }
     },
     findCities(){
         if(this.cityInput.length < 3) return;
-        const foundCities = this.cityList.filter( city => city.name.indexOf(this.cityInput) + 1);
-        const cuttedCities = foundCities.slice(0, 5);
-        this.citiesHelper = cuttedCities;
+        this.citiesHelper = this.foundCities;
         
     },
     chooseCity(lat, lon, name, country){
@@ -126,7 +127,7 @@ methods: {
         let date = new Date(time);
         return date.getDate();
     },
-    changeCitiesArr(arr){
+    normalizeCitiesArr(arr){
         return arr.map( day => {
             const daysName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             let date = new Date();
@@ -140,8 +141,16 @@ methods: {
     },
     
 },
+computed: {
+    foundCities(){
+        return this.cityList.filter( city => city.name.indexOf(this.cityInput) + 1).slice(0, 5);
+    },
+    showCityList(){
+        return (this.citiesHelper.length && this.cityInput.length > 3 && this.inputFocus);
+    }
+},
 created(){
-    this.getCities();
+    this.getCityInfo();
 }
 }
 </script>

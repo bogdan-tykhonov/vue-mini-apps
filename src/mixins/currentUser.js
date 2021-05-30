@@ -7,12 +7,13 @@ export default {
         }
     },
     methods: {
-         getUid(){
-            const user =  firebase.auth().currentUser;
-            return  user ? user.uid : null;
+          async getUid (){
+            const user =   firebase.auth().currentUser;
+          
+            return  user? user.uid : null;
           },
           async getName(){
-            const userId =   this.getUid();
+            const userId =  await this.getUid();
             let name ;
             if(!userId) return name = null;
             await firebase.database().ref(`/users/${userId}/info`).once('value', function(snapshot){

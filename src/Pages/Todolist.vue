@@ -58,7 +58,7 @@
 import Heading from '@/components/Heading';
 import InputModal from '@/components/InputModal';
 import currentUser from '@/mixins/currentUser';
-import firebase from 'firebase/app';
+import {updateDb, loadNotes} from '@/api/db';
 export default {
   components: { Heading, InputModal },
     name: 'Todolist',
@@ -66,7 +66,6 @@ export default {
     data(){
        return{
             notes: [ ],
-            userId: this.getUid(),
             loading: true,
             showModal: false,
             filter: 'all',
@@ -79,22 +78,17 @@ export default {
        }
     }, 
     methods: {
-        async addNote(){
-            try{
+         addNote(){
             const note = this.inputNote;
             if(!note) return;
             this.notes.unshift({ text: note, completed: false, id: Date.now()});
             this.inputNote = '';
-            await this.updateDb();
-            }catch(e){
-                console.log(e);
-            }
         }, 
         async completeNote(id){
             const foundNote = this.notes.find(note => note.id == id);    
             foundNote.completed = !foundNote.completed;
             try{
-                await this.updateDb();
+                await updateDb(this.notes);
             }catch(e){
                 console.log(e);
             }
@@ -105,30 +99,22 @@ export default {
             this.currentItem.completed = this.notes[index].completed;
             this.showModal = true;
         },
-        async editNote(editedNote){
+         editNote(editedNote){
             this.notes.splice(editedNote.index, 1, {
                 text: editedNote.text,
                 completed: editedNote.completed
             });
-            try{
-                await this.updateDb();
-                this.showModal = false;
-            }catch(e){
-                console.log(e);
-            }
         },
-        async updateDb(){
-              await firebase.database().ref(`/users/${this.userId}/todoList`).update({notes: this.notes});
-            
-        },
-        async removeNote(index){
+         removeNote(index){
             this.notes.splice(index, 1);
-            try{
-                await this.updateDb();
-            }catch(e){
-                console.log(e);
-            }
         },
+        async updateNotesDb(){
+            try{
+                 await updateDb(this.notes);
+            }catch(e){
+                 console.log(e);   
+            }
+        }
     },
     computed: {
         totalNotes(){
@@ -147,13 +133,21 @@ export default {
         }
     },
     async mounted(){
-        let dbNotes ;
-        await firebase.database().ref(`/users/${this.userId}/todoList`).once('value', function(snapshot){
-                 dbNotes = snapshot.val();
-        });
-       this.loading = false;
+        try{
+        const dbNotes = await loadNotes();
+        this.loading = false;
         if(dbNotes){
             this.notes = Object.values(dbNotes.notes);
+        }
+        }catch(e){
+            console.log(e);
+        }
+       
+    },
+    watch: {
+        notes(){
+            this.updateNotesDb();
+            this.showModal = false;
         }
     }
 }

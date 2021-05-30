@@ -13,6 +13,9 @@ import currentUser from '@/mixins/currentUser'
 export default {
   name: 'App',
   mixins: [currentUser],
+  components: {
+   Navbar,
+  },
   data(){
     return{
        apps: [
@@ -50,16 +53,7 @@ export default {
     }
   },
   async mounted(){
-      try{
-        this.isAuth = await this.getUid();
-        this.userName = await this.getName();
-      }catch(e){
-        console.log(e);
-      }
-  },
-  components: {
-   Navbar,
-
+     await this.isAuthHandler();
   }
 }
 </script>

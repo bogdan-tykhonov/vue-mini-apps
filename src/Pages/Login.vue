@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import firebase from 'firebase/app';
+import {makeLogin} from '@/api/db';
 import Toast from '@/mixins/toasts.js';
 export default {
 name: 'Login',
@@ -69,7 +69,7 @@ methods: {
 
       async login({email, password}){
             try{
-              await  firebase.auth().signInWithEmailAndPassword(email, password);
+              await makeLogin(email, password);
                this.$emit('isAuthEvent');
               this.$router.push('/vue-mini-apps/?action=login');
             }catch (e){

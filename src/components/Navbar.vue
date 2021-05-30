@@ -15,11 +15,9 @@
 
      <b-navbar-nav class="ml-auto">
        <b-nav-item-dropdown right v-if="auth">
-          <!-- Using 'button-content' slot -->
           <template #button-content>
             <em>{{userName}}</em>
           </template>
-          <!-- <b-dropdown-item >Profile</b-dropdown-item> -->
           <b-dropdown-item @click.prevent="signOut" >Log Out</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-navbar-nav v-else class="nav-links">
@@ -36,16 +34,14 @@
 </template>
 
 <script>
-import currentUser from '@/mixins/currentUser'
-import firebase from 'firebase/app';
+import {makeLogout} from '@/api/db';
 export default {
     name: "Navbar",
-    mixins: [currentUser],
     props: ['auth', 'userName'],
     methods: {
      async signOut(){
        try{
-         await firebase.auth().signOut();
+        await makeLogout();
         this.$emit('isAuthEvent');
         this.$router.push('/login?action=logout');
        }catch(e){
