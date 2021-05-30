@@ -55,7 +55,7 @@
       <b-button type="submit" variant="info">Submit</b-button>
 
         <div class="sign-up">
-           <h3>Already have an account? <router-link class="info" to="/login">Sign in</router-link></h3>
+           <h3>Already have an account? <router-link class="info" to="/vue-mini-apps/login">Sign in</router-link></h3>
         </div>
 
     </b-form>

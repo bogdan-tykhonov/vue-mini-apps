@@ -37,7 +37,7 @@
 
         <div class="sign-up">
             
-             <h3>Don't have an account? <router-link class="info" to="/registration">Sign up</router-link></h3>
+             <h3>Don't have an account? <router-link class="info" to="/vue-mini-apps/registration">Sign up</router-link></h3>
         </div>
 
     </b-form>
