@@ -8,9 +8,9 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="nav-links">
           <router-link to="/vue-mini-apps">Home</router-link>
-          <router-link to="/calculator">Calculator</router-link>
-          <router-link to="/todolist">Todolist</router-link>
-          <router-link to="/weather">Weather forecast</router-link>
+          <router-link to="/vue-mini-apps/calculator">Calculator</router-link>
+          <router-link to="/vue-mini-apps/todolist">Todolist</router-link>
+          <router-link to="/vue-mini-apps/weather">Weather forecast</router-link>
       </b-navbar-nav>
 
      <b-navbar-nav class="ml-auto">
@@ -21,7 +21,7 @@
           <b-dropdown-item @click.prevent="signOut" >Log Out</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-navbar-nav v-else class="nav-links">
-        <router-link  to="/login">Sign in</router-link>
+        <router-link  to="/vue-mini-apps/login">Sign in</router-link>
         </b-navbar-nav>
      </b-navbar-nav>
 

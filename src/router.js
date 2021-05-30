@@ -32,11 +32,11 @@ const router = new Router({
             meta: {auth:true}
         },
         {
-            path: "/vue-mini-apps//login",
+            path: "/vue-mini-apps/login",
             component: Login,
         },
         {
-            path: '/vue-mini-apps//registration',
+            path: '/vue-mini-apps/registration',
             component: Registration
         }
     ]
